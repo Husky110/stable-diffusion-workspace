@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=InvokeAI
+Exec=xfce4-terminal -H -e "bash -c 'cd /start_scripts && ./start_invoke.sh'"
+Icon=utilities-terminal
+Terminal=false
+Categories=Utility;

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=A1111_WebUI
+Exec=xfce4-terminal -H -e "bash -c 'cd /start_scripts && ./start_a1111.sh'"
+Icon=utilities-terminal
+Terminal=false
+Categories=Utility;
