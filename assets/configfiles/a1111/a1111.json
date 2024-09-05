@@ -27,8 +27,6 @@
     "randn_source"
   ],
   "randn_source": "CPU",
-  "sd_model_checkpoint": "sd-v1-5-inpainting.ckpt [c6bbc15e32]",
-  "sd_checkpoint_hash": "c6bbc15e3224e6973459ba78de4998b80b50112b0ae5b5c67113d56b4e366b19",
   "samples_save": true,
   "samples_format": "png",
   "samples_filename_pattern": "",
