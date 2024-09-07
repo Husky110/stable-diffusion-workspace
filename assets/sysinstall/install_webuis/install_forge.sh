@@ -1,11 +1,14 @@
 #!/bin/bash
-if [ -d "/webuis/a1111" ] ; then
-    cd /webuis/a1111
+if [ -d "/webuis/forge" ] ; then
+    cd /webuis/forge
     python3 -m venv venv
     (
         source venv/bin/activate
-        pip install -r requirements.txt
-        pip install xformers==0.0.23.post1
+        if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+        fi
+        pip install insightface
+        pip install xformers==0.0.27
         cd extensions
         for dir in */; do
             if [ -f "$dir/requirements.txt" ]; then

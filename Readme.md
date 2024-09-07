@@ -1,4 +1,4 @@
-# Warning: This repo is still WIP! Do NOT use it until further notice!
+# Warning: This repo is still WIP! Do NOT use it until further notice, since, right now, I'm doing breaking changed without any notice!
 
 # Purpose
 
@@ -8,7 +8,7 @@ All you need it some docker-knowledge and you should be good to go to leverage s
 
 So here it is - a Workspace-Image that runs on Docker and that (hopefully) will be your Swiss Army Knife for StableDiffusion.
 
-But - Such versatility comes with a price! I had to make some design-decisions which some might find not "newbie-friendly". I try to conquer that by documenting this container as much as possible. So please - for the love of whoever - read this docs carefully and act on them!
+But - Such versatility comes with a price! I had to make some design-decisions which some might find not "newbie-friendly". I try to conquer that by documenting this container as much as possible. So please - for the love of whoever - read this docs carefully and act on them. Remember: Upper- and lower-case letters DO matter!
 
 ## Features
 
@@ -16,12 +16,23 @@ For the referenced folders read "How do I install this?"
 
 Installable UIs and tools are:
 
-- A1111-WebUI
+- A1111-WebUI (the OG of StableDiffusion-WebUIs - can't run flux-model as of now...)
   - Preinstalled styles-cheatsheet with over 800 styles from [https://github.com/SupaGruen/StableDiffusion-CheatSheet](https://github.com/SupaGruen/StableDiffusion-CheatSheet)
-    - Those styles are meant for StableDiffusion 1.5 and SDXL - I don't know how well they perform on Pony, Flux and AmberFlow
-- Forge-WebUI (to be done)
-  - legacy (State at 2024-07-24 - some people seem to have liked it until then...)
+    - Those styles are meant for StableDiffusion 1.5 and SDXL - I don't know how well they perform on other models - you can add your own tho: Just get a grip on the styles.csv-file, see how it works and add your own.
+  - The installation-process uses some inspiration from [camenduru's docker-container-setup](https://github.com/camenduru/stable-diffusion-webui-docker)
+  - Recommended Extensions:
+    - [ADetailer](https://github.com/Bing-su/adetailer)
+    - [ControlNet](https://github.com/Mikubill/sd-webui-controlnet)
+    - [SD WebUI Tag Autocomplete](https://github.com/DominikDoom/a1111-sd-webui-tagcomplete)
+    - [SuperMerger](https://github.com/hako-mikan/sd-webui-supermerger)
+- Forge-WebUI (most extentions, except the built-ins, don't work here! but the current version can run flux-models)
   - current
+    - Beware that since Forge is based on A1111-Webui - most extensions don't work anymore!
+    - I would advise on installing [ADetailer](https://github.com/Bing-su/adetailer) but that's about it.
+  - legacy (State at 2024-07-24 - some people seem to have liked it until then...)
+    - Here the extensions work less, since even tho some extensions might still work, they will stop working - going forward. 
+    - I still would recommend installing [ADetailer](https://github.com/Bing-su/adetailer), but run `git checkout 0a1fd3a` inside the extension-directory to get a "safe" working commit.
+    - I keep this in, since Forge was the only WebUI able to run SDXL-models (including Pony-ones) on my old Laptop with a GTX 1070 on 8 GB.
 - ComfyUI (to be done)
 - InvokeAI (to be done)
 - Kohya_SS (to be done)
@@ -73,18 +84,20 @@ Attention: I can't test any environment and such. The repo was built on Linux, w
   - models
     - This folder will hold you checkpoints, loras, and whatnot.
     - Path inside container: /models
-    - Inside the folder, create 3 new folders:
+    - Inside the folder, create these new folders:
       - Checkpoints (to hold all your checkpoints)
       - Embeddings (to hold all your embeddings)
       - Loras (to hold all your LoRAs)
       - VAEs (for all the VAEs and CLIPs)
+      - (recommended) ADetailer (for all Adetailer-Models if you gonna use them)
+      - (recommended) ControlNet (if you are using ControlNets - put them here)
     - I recommend structuring the sub-folders as well - like /Checkpoints/sd15; /Checkpoints/SDXL; /Checkpoints/Flux_Unet; and so on
   - data
     - This folder is to persist anything you want to share between your computer and the container.
     - Path inside container: /host
 - Clone all the webuis in their respective folder:  
 *Note: Details on quirks and maintenance are available later in this readme-file.*
-  - Enter the webuis-folder and run the following commands (you don't need all of them - just install the ones you want, but make sure to copy the whole command!):
+  - Enter the webuis-folder and run the following commands (you don't need all of them - just install the ones you want, but make sure to copy the whole command! - Informations on each UI can be found on their respective github-repos.):
   - A1111: `git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git a1111`
   - Forge:
     - Current: `git clone https://github.com/lllyasviel/stable-diffusion-webui-forge.git forge`
@@ -94,7 +107,7 @@ Attention: I can't test any environment and such. The repo was built on Linux, w
   - InvokeAI: `git clone https://github.com/invoke-ai/InvokeAI.git invokeai`
   - ICLight - Relighting-Tool: `git clone https://github.com/lllyasviel/IC-Light.git ICLight`
   - Kohya_SS - Training: `git clone --recursive https://github.com/bmaltais/kohya_ss.git kohya`
-- Run the following command inside the repo-directory: `docker build -t localhost/stablediffusion_workspace:latest .` and wait for it to finish.
+- Run the following command inside directory of this repo: `docker build -t localhost/stablediffusion_workspace:latest .` and wait for it to finish.
 
 ### Running via docker-compose
 
@@ -103,9 +116,9 @@ Attention: I can't test any environment and such. The repo was built on Linux, w
 
 ### General
 #### Maintenance:
-  - Maintenance is done by running `git pull` inside the according webuis-folder.
+  - Maintenance is done by running `git pull` inside the according webuis-folder and extension-folders.
 
-### A1111
+### A1111/Forge/Forge-Legacy
 - Extensions can't be installed persistently via the WebUI itself anymore. It's a bit of a good news - bad news-situation:
   - Since we build the python-venv with the container you have to install extensions via `git clone` inside the extensions-directory, you have to rebuild the container once the extionsions were beeing cloned and you have to activate them inside the container after it's first start.
   - Good news: you can test extensions before you install them permanently into your system. Just add them via the webui - but when you restart the container they are gone again!
@@ -120,7 +133,6 @@ Attention: I can't test any environment and such. The repo was built on Linux, w
   - I recommend the following start-parameters:
     - `--xformers` (enable xformers for speed-improvements)
     - `--enable-insecure-extension-access` (required for some extensions)
-    - `--listen --port 7860` (To set the port to 7860 - you can open A1111 then via http://localhost:7860 - I know it's the standard-port, but having it explicitly set makes it easier to change it later if required. :) )
   - You can either edit the webui_user.sh-file inside the repository folder, or inside the tech-folder. Changes inside the container are beeing persited in the tech-folder.
 
 ### Ungoogled Chromium

@@ -12,3 +12,10 @@ fi
 
 # Now we need to setup A1111 if it is installed...
 /start_scripts/boot/a1111.sh
+
+# Now we need to setup Forge if it is installed...
+/start_scripts/boot/forge.sh
+
+# Now we need to setup Forge_Legacy if it is installed...
+/start_scripts/boot/forge_legacy.sh
+

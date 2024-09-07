@@ -74,5 +74,21 @@ COPY --chown=1000:1000 /assets/configfiles/a1111/a1111.json /webuis/a1111/config
 RUN ln -s /webuis/a1111/ $HOME/Desktop/A1111_WebUI
 COPY --chown=1000:1000 /assets/sysinstall/A1111_WebUI.desktop $HOME/Desktop/A1111_WebUI.desktop
 
+# Installations for Forge
+RUN /install_webuis/install_forge.sh
+RUN cd $WORKDIR
+COPY --chown=1000:1000 /assets/sysinstall/styles.csv /webuis/forge/styles.csv
+COPY --chown=1000:1000 /assets/configfiles/forge/forge.json /webuis/forge/config.json
+RUN ln -s /webuis/forge/ $HOME/Desktop/Forge
+COPY --chown=1000:1000 /assets/sysinstall/Forge_WebUI.desktop $HOME/Desktop/Forge.desktop
+
+# Installations for Forge_Legacy
+RUN /install_webuis/install_forge_legacy.sh
+RUN cd $WORKDIR
+COPY --chown=1000:1000 /assets/sysinstall/styles.csv /webuis/forge_legacy/styles.csv
+COPY --chown=1000:1000 /assets/configfiles/forge/forge.json /webuis/forge_legacy/config.json
+RUN ln -s /webuis/forge_legacy/ $HOME/Desktop/Forge_Legacy
+COPY --chown=1000:1000 /assets/sysinstall/Forge_WebUI_Legacy.desktop $HOME/Desktop/Forge_Legacy.desktop
+
 # Importing Custom-StartupScript
 COPY --chown=1000:1000 /assets/custom_startup.sh $STARTUPDIR/custom_startup_DEBUG.sh

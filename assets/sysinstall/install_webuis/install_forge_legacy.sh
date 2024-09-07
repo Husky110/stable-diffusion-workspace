@@ -1,10 +1,15 @@
 #!/bin/bash
-if [ -d "/webuis/a1111" ] ; then
-    cd /webuis/a1111
+if [ -d "/webuis/forge_legacy" ] ; then
+    cd /webuis/forge_legacy
     python3 -m venv venv
     (
         source venv/bin/activate
-        pip install -r requirements.txt
+        if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+        fi
+        pip install insightface
+        pip install albumentations==1.4.3
+        pip install pydantic==1.10.15
         pip install xformers==0.0.23.post1
         cd extensions
         for dir in */; do

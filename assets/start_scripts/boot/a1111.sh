@@ -57,4 +57,15 @@ if [ -d "/webuis/a1111" ]; then
     rm -rf embeddings
     ln -s /models/Embeddings embeddings
 
+    if [ -d "/models/ADetailer" ]; then
+        if [ ! -L "/webuis/a1111/models/adetailer" ]; then
+            cd models && rm -rf adetailer && ln -s /models/ADetailer adetailer && cd ..
+        fi
+    fi
+    if [ -d "/models/ControlNet" ]; then
+        if [ ! -L "/webuis/a1111/models/ControlNet" ]; then
+            cd models && rm -rf ControlNet && ln -s /models/ControlNet ControlNet && cd ..
+        fi
+    fi
+    
 fi
